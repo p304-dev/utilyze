@@ -9,7 +9,7 @@ export async function GET() {
   const db = createServerSupabaseClient()
   const { data, error } = await db
     .from('businesses')
-    .select('*, locations(count)')
+    .select('*, locations(id)')
     .order('created_at', { ascending: false })
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
