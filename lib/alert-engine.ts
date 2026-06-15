@@ -71,19 +71,23 @@ function renderTemplate(template: AlertTemplate, vars: Record<string, string>): 
 
 // ─── Core engine ─────────────────────────────────────────────────────────────
 
-export async function runAlertCheck(testMode = false): Promise<AlertCheckResult> {
+export async function runAlertCheck(testMode = false, locationId?: string): Promise<AlertCheckResult> {
   const supabase = createServerSupabaseClient()
   const effectiveTestMode = testMode || process.env.ALERT_TEST_MODE === 'true'
 
   const result: AlertCheckResult = { processed: 0, sent: 0, skipped: 0, failed: 0 }
 
-  // 1. Load all active locations that have coordinates
-  const { data: locations, error: locErr } = await supabase
+  // 1. Load active locations that have coordinates; optionally filter to one location
+  let locQuery = supabase
     .from('locations')
     .select('*')
     .eq('active', true)
     .not('latitude', 'is', null)
     .not('longitude', 'is', null)
+
+  if (locationId) locQuery = locQuery.eq('id', locationId)
+
+  const { data: locations, error: locErr } = await locQuery
 
   if (locErr || !locations) {
     console.error('[AlertEngine] Failed to load locations:', locErr)
