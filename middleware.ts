@@ -2,6 +2,11 @@ import { createServerClient } from '@supabase/ssr'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function middleware(req: NextRequest) {
+  // If env vars aren't configured yet, skip auth checks rather than crashing.
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return NextResponse.next({ request: req })
+  }
+
   // We can't use getAuthUser() here — middleware runs in the Edge runtime
   // before next/headers cookies() is available. We read cookies from the
   // request directly and let @supabase/ssr handle session refresh.
