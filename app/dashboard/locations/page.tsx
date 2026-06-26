@@ -133,7 +133,7 @@ export default function LocationsPage() {
         </button>
       </div>
 
-      {loading ? <p className="text-sm text-gray-500">Loading…</p> : (
+      {loading ? <p className="text-sm text-gray-700">Loading…</p> : (
         <div className="bg-white rounded-lg border overflow-hidden">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b">
@@ -150,11 +150,11 @@ export default function LocationsPage() {
               {items.map(loc => (
                 <tr key={loc.id} className="border-t hover:bg-gray-50">
                   <td className="px-4 py-3 font-medium text-gray-900">{loc.location_name}</td>
-                  <td className="px-4 py-3 text-gray-500">{loc.businesses?.business_name ?? '—'}</td>
-                  <td className="px-4 py-3 text-gray-500">{loc.city}, {loc.state}</td>
-                  <td className="px-4 py-3 text-gray-500">{loc.utility_name}</td>
+                  <td className="px-4 py-3 text-gray-700">{loc.businesses?.business_name ?? '—'}</td>
+                  <td className="px-4 py-3 text-gray-700">{loc.city}, {loc.state}</td>
+                  <td className="px-4 py-3 text-gray-700">{loc.utility_name}</td>
                   <td className="px-4 py-3">
-                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${loc.active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${loc.active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}`}>
                       {loc.active ? 'Active' : 'Inactive'}
                     </span>
                   </td>
@@ -165,7 +165,7 @@ export default function LocationsPage() {
                 </tr>
               ))}
               {items.length === 0 && (
-                <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-400 text-sm">No locations yet.</td></tr>
+                <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-600 text-sm">No locations yet.</td></tr>
               )}
             </tbody>
           </table>

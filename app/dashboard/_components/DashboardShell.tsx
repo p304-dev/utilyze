@@ -45,7 +45,7 @@ export default function DashboardShell({
                 className={`block px-3 py-2 rounded-md text-sm transition-colors ${
                   active
                     ? 'bg-blue-50 text-blue-700 font-medium'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                    : 'text-gray-800 hover:bg-gray-50 hover:text-gray-900'
                 }`}
               >
                 {link.label}
@@ -61,7 +61,7 @@ export default function DashboardShell({
         <header className="bg-white border-b px-6 py-3 flex items-center justify-between shrink-0">
           <span className="font-semibold text-gray-800">Utilyze Admin</span>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-500">{email}</span>
+            <span className="text-sm text-gray-700">{email}</span>
             <button
               onClick={signOut}
               className="text-sm text-gray-600 hover:text-gray-900 border rounded px-3 py-1 transition-colors"

@@ -64,7 +64,7 @@ export default function BusinessesPage() {
       </div>
 
       {loading ? (
-        <p className="text-sm text-gray-500">Loading…</p>
+        <p className="text-sm text-gray-700">Loading…</p>
       ) : (
         <div className="bg-white rounded-lg border overflow-hidden">
           <table className="w-full text-sm">
@@ -82,14 +82,14 @@ export default function BusinessesPage() {
               {items.map(biz => (
                 <tr key={biz.id} className="border-t hover:bg-gray-50">
                   <td className="px-4 py-3 font-medium text-gray-900">{biz.business_name}</td>
-                  <td className="px-4 py-3 text-gray-500">{biz.website ?? '—'}</td>
+                  <td className="px-4 py-3 text-gray-700">{biz.website ?? '—'}</td>
                   <td className="px-4 py-3">
-                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${biz.active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${biz.active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}`}>
                       {biz.active ? 'Active' : 'Inactive'}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-gray-500">{biz.locations?.length ?? 0}</td>
-                  <td className="px-4 py-3 text-gray-400">{new Date(biz.created_at).toLocaleDateString()}</td>
+                  <td className="px-4 py-3 text-gray-700">{biz.locations?.length ?? 0}</td>
+                  <td className="px-4 py-3 text-gray-600">{new Date(biz.created_at).toLocaleDateString()}</td>
                   <td className="px-4 py-3 text-right space-x-2">
                     <button onClick={() => openEdit(biz)} className="text-blue-600 hover:underline text-xs">Edit</button>
                     <button onClick={() => handleDelete(biz.id)} className="text-red-500 hover:underline text-xs">Delete</button>
@@ -97,7 +97,7 @@ export default function BusinessesPage() {
                 </tr>
               ))}
               {items.length === 0 && (
-                <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-400 text-sm">No businesses yet. Add one to get started.</td></tr>
+                <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-600 text-sm">No businesses yet. Add one to get started.</td></tr>
               )}
             </tbody>
           </table>

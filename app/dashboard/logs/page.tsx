@@ -20,7 +20,7 @@ const STATUS_BADGE: Record<string, string> = {
   sent:        'bg-green-100 text-green-700',
   test_logged: 'bg-yellow-100 text-yellow-700',
   failed:      'bg-red-100 text-red-700',
-  skipped:     'bg-gray-100 text-gray-500',
+  skipped:     'bg-gray-100 text-gray-700',
 }
 
 export default function LogsPage() {
@@ -138,13 +138,13 @@ export default function LogsPage() {
           Apply
         </button>
         <button onClick={() => { setFilterStatus('all'); setFilterBiz(''); setFilterStart(''); setFilterEnd('') }}
-          className="text-sm text-gray-500 hover:text-gray-700 px-2">
+          className="text-sm text-gray-700 hover:text-gray-700 px-2">
           Clear
         </button>
       </div>
 
       {/* Table */}
-      {loading ? <p className="text-sm text-gray-500">Loading…</p> : (
+      {loading ? <p className="text-sm text-gray-700">Loading…</p> : (
         <div className="bg-white rounded-lg border overflow-hidden">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b">
@@ -162,26 +162,26 @@ export default function LogsPage() {
             <tbody>
               {logs.map(log => (
                 <tr key={log.id} className="border-t hover:bg-gray-50 align-top">
-                  <td className="px-4 py-3 text-gray-400 text-xs whitespace-nowrap">
+                  <td className="px-4 py-3 text-gray-600 text-xs whitespace-nowrap">
                     {new Date(log.triggered_at).toLocaleString()}
                   </td>
                   <td className="px-4 py-3 text-gray-600">{log.businesses?.business_name ?? '—'}</td>
                   <td className="px-4 py-3 text-gray-600">{log.locations?.location_name ?? '—'}</td>
-                  <td className="px-4 py-3 text-gray-500 font-mono text-xs">{log.contacts?.phone_number ?? '—'}</td>
-                  <td className="px-4 py-3 text-gray-500 text-xs">{log.utility_rate_rules?.program_name ?? '—'}</td>
+                  <td className="px-4 py-3 text-gray-700 font-mono text-xs">{log.contacts?.phone_number ?? '—'}</td>
+                  <td className="px-4 py-3 text-gray-700 text-xs">{log.utility_rate_rules?.program_name ?? '—'}</td>
                   <td className="px-4 py-3 text-gray-600 font-mono">{log.temperature_f != null ? `${log.temperature_f}°F` : '—'}</td>
                   <td className="px-4 py-3">
                     <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_BADGE[log.status] ?? 'bg-gray-100 text-gray-600'}`}>
                       {log.status}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-gray-500 text-xs max-w-xs">
+                  <td className="px-4 py-3 text-gray-700 text-xs max-w-xs">
                     <span className="line-clamp-2">{log.message_body ?? log.skip_reason ?? '—'}</span>
                   </td>
                 </tr>
               ))}
               {logs.length === 0 && (
-                <tr><td colSpan={8} className="px-4 py-8 text-center text-gray-400 text-sm">No logs yet. Run an alert check to see results.</td></tr>
+                <tr><td colSpan={8} className="px-4 py-8 text-center text-gray-600 text-sm">No logs yet. Run an alert check to see results.</td></tr>
               )}
             </tbody>
           </table>
@@ -193,7 +193,7 @@ export default function LogsPage() {
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
             <h3 className="text-base font-semibold mb-1">Send Test Alert</h3>
-            <p className="text-sm text-gray-500 mb-4">
+            <p className="text-sm text-gray-700 mb-4">
               Runs the alert engine for one location in test mode. No real SMS will be sent.
               Logs will appear with status <span className="font-mono bg-yellow-100 text-yellow-700 px-1 rounded text-xs">test_logged</span>.
             </p>

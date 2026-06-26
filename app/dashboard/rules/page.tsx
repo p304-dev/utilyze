@@ -103,7 +103,7 @@ export default function RulesPage() {
         </button>
       </div>
 
-      {loading ? <p className="text-sm text-gray-500">Loading…</p> : (
+      {loading ? <p className="text-sm text-gray-700">Loading…</p> : (
         <div className="bg-white rounded-lg border overflow-hidden">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b">
@@ -122,14 +122,14 @@ export default function RulesPage() {
               {items.map(rule => (
                 <tr key={rule.id} className="border-t hover:bg-gray-50">
                   <td className="px-4 py-3 font-medium text-gray-900">{rule.program_name}</td>
-                  <td className="px-4 py-3 text-gray-500">{rule.utility_name}<br /><span className="text-xs">{rule.city}, {rule.state}</span></td>
-                  <td className="px-4 py-3 text-gray-500 text-xs">
+                  <td className="px-4 py-3 text-gray-700">{rule.utility_name}<br /><span className="text-xs">{rule.city}, {rule.state}</span></td>
+                  <td className="px-4 py-3 text-gray-700 text-xs">
                     {MONTHS[rule.season_start_month - 1]} {rule.season_start_day} –<br />
                     {MONTHS[rule.season_end_month - 1]} {rule.season_end_day}
                   </td>
-                  <td className="px-4 py-3 text-gray-500 text-xs font-mono">
+                  <td className="px-4 py-3 text-gray-700 text-xs font-mono">
                     {rule.start_time_local.slice(0,5)} – {rule.end_time_local.slice(0,5)}<br />
-                    <span className="text-gray-400">{rule.active_days_of_week.map(d => DAYS[d]).join(', ')}</span>
+                    <span className="text-gray-600">{rule.active_days_of_week.map(d => DAYS[d]).join(', ')}</span>
                   </td>
                   <td className="px-4 py-3 text-gray-700 font-mono">{rule.min_temperature_f}°</td>
                   <td className="px-4 py-3">
@@ -138,7 +138,7 @@ export default function RulesPage() {
                     </span>
                   </td>
                   <td className="px-4 py-3">
-                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${rule.active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${rule.active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}`}>
                       {rule.active ? 'Active' : 'Inactive'}
                     </span>
                   </td>
@@ -149,7 +149,7 @@ export default function RulesPage() {
                 </tr>
               ))}
               {items.length === 0 && (
-                <tr><td colSpan={8} className="px-4 py-8 text-center text-gray-400 text-sm">No rules yet.</td></tr>
+                <tr><td colSpan={8} className="px-4 py-8 text-center text-gray-600 text-sm">No rules yet.</td></tr>
               )}
             </tbody>
           </table>
@@ -193,19 +193,19 @@ export default function RulesPage() {
                 <label className="block text-xs font-medium text-gray-700 mb-2">Season Window</label>
                 <div className="grid grid-cols-4 gap-2 items-center">
                   <div>
-                    <label className="text-xs text-gray-500">Start month</label>
+                    <label className="text-xs text-gray-700">Start month</label>
                     <input type="number" min={1} max={12} className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.season_start_month} onChange={f('season_start_month')} />
                   </div>
                   <div>
-                    <label className="text-xs text-gray-500">Start day</label>
+                    <label className="text-xs text-gray-700">Start day</label>
                     <input type="number" min={1} max={31} className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.season_start_day} onChange={f('season_start_day')} />
                   </div>
                   <div>
-                    <label className="text-xs text-gray-500">End month</label>
+                    <label className="text-xs text-gray-700">End month</label>
                     <input type="number" min={1} max={12} className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.season_end_month} onChange={f('season_end_month')} />
                   </div>
                   <div>
-                    <label className="text-xs text-gray-500">End day</label>
+                    <label className="text-xs text-gray-700">End day</label>
                     <input type="number" min={1} max={31} className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.season_end_day} onChange={f('season_end_day')} />
                   </div>
                 </div>

@@ -110,7 +110,7 @@ export default function ContactsPage() {
         </button>
       </div>
 
-      {loading ? <p className="text-sm text-gray-500">Loading…</p> : (
+      {loading ? <p className="text-sm text-gray-700">Loading…</p> : (
         <div className="bg-white rounded-lg border overflow-hidden">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b">
@@ -129,12 +129,12 @@ export default function ContactsPage() {
               {items.map(c => (
                 <tr key={c.id} className="border-t hover:bg-gray-50">
                   <td className="px-4 py-3 font-medium text-gray-900">{[c.first_name, c.last_name].filter(Boolean).join(' ') || '—'}</td>
-                  <td className="px-4 py-3 text-gray-500 font-mono">{c.phone_number}</td>
-                  <td className="px-4 py-3 text-gray-500">{c.role ?? '—'}</td>
-                  <td className="px-4 py-3 text-gray-500">{c.businesses?.business_name ?? '—'}</td>
-                  <td className="px-4 py-3 text-gray-500">{c.locations?.location_name ?? '—'}</td>
+                  <td className="px-4 py-3 text-gray-700 font-mono">{c.phone_number}</td>
+                  <td className="px-4 py-3 text-gray-700">{c.role ?? '—'}</td>
+                  <td className="px-4 py-3 text-gray-700">{c.businesses?.business_name ?? '—'}</td>
+                  <td className="px-4 py-3 text-gray-700">{c.locations?.location_name ?? '—'}</td>
                   <td className="px-4 py-3">
-                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${c.receive_alerts ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${c.receive_alerts ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}`}>
                       {c.receive_alerts ? 'Yes' : 'No'}
                     </span>
                   </td>
@@ -150,7 +150,7 @@ export default function ContactsPage() {
                 </tr>
               ))}
               {items.length === 0 && (
-                <tr><td colSpan={8} className="px-4 py-8 text-center text-gray-400 text-sm">No contacts yet.</td></tr>
+                <tr><td colSpan={8} className="px-4 py-8 text-center text-gray-600 text-sm">No contacts yet.</td></tr>
               )}
             </tbody>
           </table>
@@ -199,11 +199,11 @@ export default function ContactsPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Quiet Hours (local time — no alerts sent during this window)</label>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="text-xs text-gray-500 mb-1 block">Start</label>
+                    <label className="text-xs text-gray-700 mb-1 block">Start</label>
                     <input type="time" className="w-full border rounded-md px-3 py-2 text-sm" value={form.quiet_hours_start} onChange={f('quiet_hours_start')} />
                   </div>
                   <div>
-                    <label className="text-xs text-gray-500 mb-1 block">End</label>
+                    <label className="text-xs text-gray-700 mb-1 block">End</label>
                     <input type="time" className="w-full border rounded-md px-3 py-2 text-sm" value={form.quiet_hours_end} onChange={f('quiet_hours_end')} />
                   </div>
                 </div>
