@@ -34,7 +34,8 @@ export async function GET() {
     }
   }
 
-  const enriched = (customers as Record<string, unknown>[] ?? []).map(c => ({
+  const rows = (customers ?? []) as unknown as Record<string, unknown>[]
+  const enriched = rows.map(c => ({
     ...c,
     latest_scrape: latestByCustomer.get(c.id as string) ?? null,
   }))
@@ -61,9 +62,11 @@ export async function POST(req: Request) {
 
   if (error) return Response.json({ error: error.message }, { status: 500 })
 
+  const customerId = (customer as unknown as { id: string }).id
+
   // Create default alert settings
   await supabase.from('water_alert_settings').insert({
-    water_customer_id: customer.id,
+    water_customer_id: customerId,
     after_hours_enabled: true,
     min_after_hours_gallons: 50,
     continuous_flow_enabled: true,
@@ -73,7 +76,7 @@ export async function POST(req: Request) {
   // Create default business hours (Mon–Fri open 8am–5pm, weekends closed)
   await supabase.from('water_business_hours').insert(
     Array.from({ length: 7 }, (_, i) => ({
-      water_customer_id: customer.id,
+      water_customer_id: customerId,
       day_of_week: i,
       is_open: i >= 1 && i <= 5,
       open_time: i >= 1 && i <= 5 ? '08:00:00' : null,

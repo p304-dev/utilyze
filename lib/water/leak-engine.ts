@@ -84,7 +84,7 @@ export async function runWaterCheck(
     return result
   }
 
-  for (const customer of customers as (WaterCustomer & { utility_password_encrypted: string })[]) {
+  for (const customer of customers as unknown as (WaterCustomer & { utility_password_encrypted: string })[]) {
     // When running globally, only process customers whose check_time hour matches now.
     // Each customer runs once per day at their preferred local hour.
     if (!customerId) {
