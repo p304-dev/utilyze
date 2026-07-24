@@ -55,7 +55,7 @@ export class SawsProvider implements WaterUtilityProvider {
     // Dynamic import keeps playwright out of the bundle on environments that don't have it.
     // Requires: npm install playwright && npx playwright install chromium
     const { chromium } = await import('playwright')
-    const browser = await chromium.launch({ headless: true })
+    const browser = await chromium.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] })
     const context = await browser.newContext()
     const page = await context.newPage()
 
