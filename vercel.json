@@ -1,13 +1,2 @@
-{
-  "crons": [
-    {
-      "path": "/api/cron/run-alert-check",
-      "schedule": "*/15 * * * *"
-    },
-    {
-      "path": "/api/water/cron/run-water-check",
-      "schedule": "0 * * * *"
-    }
-  ]
-}
+{}
 
