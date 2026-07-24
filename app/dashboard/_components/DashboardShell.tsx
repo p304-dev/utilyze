@@ -4,12 +4,17 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { createBrowserSupabaseClient } from '@/lib/supabase'
 
-const NAV_LINKS = [
+const ENERGY_LINKS = [
   { href: '/dashboard/businesses', label: 'Businesses' },
   { href: '/dashboard/locations',  label: 'Locations' },
   { href: '/dashboard/contacts',   label: 'Contacts' },
   { href: '/dashboard/rules',      label: 'Rules' },
   { href: '/dashboard/logs',       label: 'Alert Logs' },
+]
+
+const WATER_LINKS = [
+  { href: '/dashboard/water-customers', label: 'Water Customers' },
+  { href: '/dashboard/water-alerts',    label: 'Water Alerts' },
 ]
 
 export default function DashboardShell({
@@ -36,7 +41,25 @@ export default function DashboardShell({
           <span className="font-bold text-gray-900 text-base">Utilyze</span>
         </div>
         <nav className="flex-1 p-3 space-y-0.5">
-          {NAV_LINKS.map(link => {
+          <p className="px-3 pt-1 pb-1 text-xs font-semibold text-gray-500 uppercase tracking-wide">Energy Alerts</p>
+          {ENERGY_LINKS.map(link => {
+            const active = pathname.startsWith(link.href)
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`block px-3 py-2 rounded-md text-sm transition-colors ${
+                  active
+                    ? 'bg-blue-50 text-blue-700 font-medium'
+                    : 'text-gray-800 hover:bg-gray-50 hover:text-gray-900'
+                }`}
+              >
+                {link.label}
+              </Link>
+            )
+          })}
+          <p className="px-3 pt-3 pb-1 text-xs font-semibold text-gray-500 uppercase tracking-wide">Water Leak Alerts</p>
+          {WATER_LINKS.map(link => {
             const active = pathname.startsWith(link.href)
             return (
               <Link
@@ -64,7 +87,7 @@ export default function DashboardShell({
             <span className="text-sm text-gray-700">{email}</span>
             <button
               onClick={signOut}
-              className="text-sm text-gray-600 hover:text-gray-900 border rounded px-3 py-1 transition-colors"
+              className="text-sm text-gray-700 hover:text-gray-900 border rounded px-3 py-1 transition-colors"
             >
               Sign out
             </button>

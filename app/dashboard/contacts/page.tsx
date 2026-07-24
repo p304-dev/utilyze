@@ -100,7 +100,7 @@ export default function ContactsPage() {
         <div className="flex items-center gap-3">
           <h2 className="text-xl font-semibold text-gray-900">Contacts</h2>
           <select value={filterBiz} onChange={e => { setFilterBiz(e.target.value); load(e.target.value) }}
-            className="border rounded-md px-2 py-1.5 text-sm text-gray-600">
+            className="border rounded-md px-2 py-1.5 text-sm text-gray-900">
             <option value="">All businesses</option>
             {businesses.map(b => <option key={b.id} value={b.id}>{b.business_name}</option>)}
           </select>
@@ -115,13 +115,13 @@ export default function ContactsPage() {
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b">
               <tr>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Name</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Phone</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Role</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Business</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Location</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Alerts</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Opt-out</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Name</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Phone</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Role</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Business</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Location</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Alerts</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Opt-out</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
@@ -150,7 +150,7 @@ export default function ContactsPage() {
                 </tr>
               ))}
               {items.length === 0 && (
-                <tr><td colSpan={8} className="px-4 py-8 text-center text-gray-600 text-sm">No contacts yet.</td></tr>
+                <tr><td colSpan={8} className="px-4 py-8 text-center text-gray-700 text-sm">No contacts yet.</td></tr>
               )}
             </tbody>
           </table>
@@ -164,7 +164,7 @@ export default function ContactsPage() {
             <div className="space-y-3">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Business *</label>
-                <select className="w-full border rounded-md px-3 py-2 text-sm" value={form.business_id}
+                <select className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" value={form.business_id}
                   onChange={e => { f('business_id')(e); loadLocations(e.target.value); setForm(p => ({ ...p, business_id: e.target.value, location_id: '' })) }}>
                   <option value="">Select business…</option>
                   {businesses.map(b => <option key={b.id} value={b.id}>{b.business_name}</option>)}
@@ -172,7 +172,7 @@ export default function ContactsPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Location (optional)</label>
-                <select className="w-full border rounded-md px-3 py-2 text-sm" value={form.location_id} onChange={f('location_id')} disabled={!form.business_id}>
+                <select className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" value={form.location_id} onChange={f('location_id')} disabled={!form.business_id}>
                   <option value="">No specific location</option>
                   {locations.map(l => <option key={l.id} value={l.id}>{l.location_name}</option>)}
                 </select>
@@ -180,11 +180,11 @@ export default function ContactsPage() {
               <div className="grid grid-cols-2 gap-2">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                  <input className="w-full border rounded-md px-3 py-2 text-sm" value={form.first_name} onChange={f('first_name')} />
+                  <input className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" value={form.first_name} onChange={f('first_name')} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                  <input className="w-full border rounded-md px-3 py-2 text-sm" value={form.last_name} onChange={f('last_name')} />
+                  <input className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" value={form.last_name} onChange={f('last_name')} />
                 </div>
               </div>
               <div>
@@ -193,24 +193,24 @@ export default function ContactsPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
-                <input className="w-full border rounded-md px-3 py-2 text-sm" value={form.role} onChange={f('role')} placeholder="owner, manager…" />
+                <input className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" value={form.role} onChange={f('role')} placeholder="owner, manager…" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Quiet Hours (local time — no alerts sent during this window)</label>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
                     <label className="text-xs text-gray-700 mb-1 block">Start</label>
-                    <input type="time" className="w-full border rounded-md px-3 py-2 text-sm" value={form.quiet_hours_start} onChange={f('quiet_hours_start')} />
+                    <input type="time" className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" value={form.quiet_hours_start} onChange={f('quiet_hours_start')} />
                   </div>
                   <div>
                     <label className="text-xs text-gray-700 mb-1 block">End</label>
-                    <input type="time" className="w-full border rounded-md px-3 py-2 text-sm" value={form.quiet_hours_end} onChange={f('quiet_hours_end')} />
+                    <input type="time" className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" value={form.quiet_hours_end} onChange={f('quiet_hours_end')} />
                   </div>
                 </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
-                <textarea className="w-full border rounded-md px-3 py-2 text-sm" rows={2} value={form.notes} onChange={f('notes')} />
+                <textarea className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" rows={2} value={form.notes} onChange={f('notes')} />
               </div>
               <label className="flex items-center gap-2 text-sm">
                 <input type="checkbox" checked={form.receive_alerts} onChange={e => setForm(p => ({ ...p, receive_alerts: e.target.checked }))} />
@@ -222,7 +222,7 @@ export default function ContactsPage() {
                 className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 disabled:opacity-50">
                 {saving ? 'Saving…' : 'Save'}
               </button>
-              <button onClick={() => setShowModal(false)} className="border px-4 py-2 rounded-md text-sm text-gray-600 hover:bg-gray-50">
+              <button onClick={() => setShowModal(false)} className="border px-4 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-50">
                 Cancel
               </button>
             </div>

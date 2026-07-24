@@ -108,13 +108,13 @@ export default function RulesPage() {
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b">
               <tr>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Program</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Utility / City</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Season</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Window</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Min °F</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Severity</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Status</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Program</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Utility / City</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Season</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Window</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Min °F</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Severity</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Status</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
@@ -129,11 +129,11 @@ export default function RulesPage() {
                   </td>
                   <td className="px-4 py-3 text-gray-700 text-xs font-mono">
                     {rule.start_time_local.slice(0,5)} – {rule.end_time_local.slice(0,5)}<br />
-                    <span className="text-gray-600">{rule.active_days_of_week.map(d => DAYS[d]).join(', ')}</span>
+                    <span className="text-gray-700">{rule.active_days_of_week.map(d => DAYS[d]).join(', ')}</span>
                   </td>
                   <td className="px-4 py-3 text-gray-700 font-mono">{rule.min_temperature_f}°</td>
                   <td className="px-4 py-3">
-                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${SEVERITY_COLORS[rule.severity] ?? 'bg-gray-100 text-gray-600'}`}>
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${SEVERITY_COLORS[rule.severity] ?? 'bg-gray-100 text-gray-700'}`}>
                       {rule.severity}
                     </span>
                   </td>
@@ -149,7 +149,7 @@ export default function RulesPage() {
                 </tr>
               ))}
               {items.length === 0 && (
-                <tr><td colSpan={8} className="px-4 py-8 text-center text-gray-600 text-sm">No rules yet.</td></tr>
+                <tr><td colSpan={8} className="px-4 py-8 text-center text-gray-700 text-sm">No rules yet.</td></tr>
               )}
             </tbody>
           </table>
@@ -166,25 +166,25 @@ export default function RulesPage() {
               <div className="grid grid-cols-3 gap-2">
                 <div>
                   <label className="block text-xs font-medium text-gray-700 mb-1">Utility Name *</label>
-                  <input className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.utility_name} onChange={f('utility_name')} placeholder="CPS Energy" />
+                  <input className="w-full border rounded-md px-2 py-1.5 text-sm text-gray-900" value={form.utility_name} onChange={f('utility_name')} placeholder="CPS Energy" />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-gray-700 mb-1">City *</label>
-                  <input className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.city} onChange={f('city')} />
+                  <input className="w-full border rounded-md px-2 py-1.5 text-sm text-gray-900" value={form.city} onChange={f('city')} />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-gray-700 mb-1">State *</label>
-                  <input className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.state} onChange={f('state')} maxLength={2} />
+                  <input className="w-full border rounded-md px-2 py-1.5 text-sm text-gray-900" value={form.state} onChange={f('state')} maxLength={2} />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <div>
                   <label className="block text-xs font-medium text-gray-700 mb-1">Program Name *</label>
-                  <input className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.program_name} onChange={f('program_name')} />
+                  <input className="w-full border rounded-md px-2 py-1.5 text-sm text-gray-900" value={form.program_name} onChange={f('program_name')} />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-gray-700 mb-1">Customer Class</label>
-                  <input className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.customer_class} onChange={f('customer_class')} />
+                  <input className="w-full border rounded-md px-2 py-1.5 text-sm text-gray-900" value={form.customer_class} onChange={f('customer_class')} />
                 </div>
               </div>
 
@@ -194,19 +194,19 @@ export default function RulesPage() {
                 <div className="grid grid-cols-4 gap-2 items-center">
                   <div>
                     <label className="text-xs text-gray-700">Start month</label>
-                    <input type="number" min={1} max={12} className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.season_start_month} onChange={f('season_start_month')} />
+                    <input type="number" min={1} max={12} className="w-full border rounded-md px-2 py-1.5 text-sm text-gray-900" value={form.season_start_month} onChange={f('season_start_month')} />
                   </div>
                   <div>
                     <label className="text-xs text-gray-700">Start day</label>
-                    <input type="number" min={1} max={31} className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.season_start_day} onChange={f('season_start_day')} />
+                    <input type="number" min={1} max={31} className="w-full border rounded-md px-2 py-1.5 text-sm text-gray-900" value={form.season_start_day} onChange={f('season_start_day')} />
                   </div>
                   <div>
                     <label className="text-xs text-gray-700">End month</label>
-                    <input type="number" min={1} max={12} className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.season_end_month} onChange={f('season_end_month')} />
+                    <input type="number" min={1} max={12} className="w-full border rounded-md px-2 py-1.5 text-sm text-gray-900" value={form.season_end_month} onChange={f('season_end_month')} />
                   </div>
                   <div>
                     <label className="text-xs text-gray-700">End day</label>
-                    <input type="number" min={1} max={31} className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.season_end_day} onChange={f('season_end_day')} />
+                    <input type="number" min={1} max={31} className="w-full border rounded-md px-2 py-1.5 text-sm text-gray-900" value={form.season_end_day} onChange={f('season_end_day')} />
                   </div>
                 </div>
               </div>
@@ -217,7 +217,7 @@ export default function RulesPage() {
                 <div className="flex gap-2">
                   {DAYS.map((day, i) => (
                     <button key={i} type="button" onClick={() => toggleDay(i)}
-                      className={`px-2 py-1 rounded text-xs font-medium border transition-colors ${form.active_days_of_week.includes(i) ? 'bg-blue-600 text-white border-blue-600' : 'text-gray-600 border-gray-300 hover:bg-gray-50'}`}>
+                      className={`px-2 py-1 rounded text-xs font-medium border transition-colors ${form.active_days_of_week.includes(i) ? 'bg-blue-600 text-white border-blue-600' : 'text-gray-700 border-gray-300 hover:bg-gray-50'}`}>
                       {day}
                     </button>
                   ))}
@@ -228,15 +228,15 @@ export default function RulesPage() {
               <div className="grid grid-cols-3 gap-2">
                 <div>
                   <label className="block text-xs font-medium text-gray-700 mb-1">Start Time (local)</label>
-                  <input type="time" className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.start_time_local} onChange={f('start_time_local')} />
+                  <input type="time" className="w-full border rounded-md px-2 py-1.5 text-sm text-gray-900" value={form.start_time_local} onChange={f('start_time_local')} />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-gray-700 mb-1">End Time (local)</label>
-                  <input type="time" className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.end_time_local} onChange={f('end_time_local')} />
+                  <input type="time" className="w-full border rounded-md px-2 py-1.5 text-sm text-gray-900" value={form.end_time_local} onChange={f('end_time_local')} />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-gray-700 mb-1">Min Temp (°F)</label>
-                  <input type="number" className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.min_temperature_f} onChange={f('min_temperature_f')} />
+                  <input type="number" className="w-full border rounded-md px-2 py-1.5 text-sm text-gray-900" value={form.min_temperature_f} onChange={f('min_temperature_f')} />
                 </div>
               </div>
 
@@ -244,7 +244,7 @@ export default function RulesPage() {
               <div className="grid grid-cols-2 gap-2">
                 <div>
                   <label className="block text-xs font-medium text-gray-700 mb-1">Severity *</label>
-                  <select className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.severity} onChange={f('severity')}>
+                  <select className="w-full border rounded-md px-2 py-1.5 text-sm text-gray-900" value={form.severity} onChange={f('severity')}>
                     <option value="watch">watch</option>
                     <option value="high">high</option>
                     <option value="critical">critical</option>
@@ -252,22 +252,22 @@ export default function RulesPage() {
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-gray-700 mb-1">Price Label</label>
-                  <input className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.price_label} onChange={f('price_label')} placeholder="peak demand / conservation window" />
+                  <input className="w-full border rounded-md px-2 py-1.5 text-sm text-gray-900" value={form.price_label} onChange={f('price_label')} placeholder="peak demand / conservation window" />
                 </div>
               </div>
 
               {/* Notes */}
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">Demand Charge Note</label>
-                <textarea className="w-full border rounded-md px-2 py-1.5 text-sm" rows={2} value={form.demand_charge_note} onChange={f('demand_charge_note')} />
+                <textarea className="w-full border rounded-md px-2 py-1.5 text-sm text-gray-900" rows={2} value={form.demand_charge_note} onChange={f('demand_charge_note')} />
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">Source URL</label>
-                <input className="w-full border rounded-md px-2 py-1.5 text-sm" value={form.source_url} onChange={f('source_url')} />
+                <input className="w-full border rounded-md px-2 py-1.5 text-sm text-gray-900" value={form.source_url} onChange={f('source_url')} />
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">Source Notes</label>
-                <textarea className="w-full border rounded-md px-2 py-1.5 text-sm" rows={2} value={form.source_notes} onChange={f('source_notes')} />
+                <textarea className="w-full border rounded-md px-2 py-1.5 text-sm text-gray-900" rows={2} value={form.source_notes} onChange={f('source_notes')} />
               </div>
               <label className="flex items-center gap-2 text-sm">
                 <input type="checkbox" checked={form.active} onChange={e => setForm(p => ({ ...p, active: e.target.checked }))} />
@@ -281,7 +281,7 @@ export default function RulesPage() {
                 className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 disabled:opacity-50">
                 {saving ? 'Saving…' : 'Save'}
               </button>
-              <button onClick={() => setShowModal(false)} className="border px-4 py-2 rounded-md text-sm text-gray-600 hover:bg-gray-50">
+              <button onClick={() => setShowModal(false)} className="border px-4 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-50">
                 Cancel
               </button>
             </div>

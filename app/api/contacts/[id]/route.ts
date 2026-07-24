@@ -41,6 +41,10 @@ export async function DELETE(_req: Request, { params }: Params) {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const db = createServerSupabaseClient()
+
+  // Nullify contact reference in alert_logs before deleting to avoid FK violation
+  await db.from('alert_logs').update({ contact_id: null }).eq('contact_id', params.id)
+
   const { error } = await db
     .from('contacts')
     .delete()

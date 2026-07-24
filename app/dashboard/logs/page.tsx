@@ -118,7 +118,7 @@ export default function LogsPage() {
       {/* Filters */}
       <div className="flex flex-wrap gap-2 mb-4">
         <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)}
-          className="border rounded-md px-2 py-1.5 text-sm text-gray-600">
+          className="border rounded-md px-2 py-1.5 text-sm text-gray-700">
           <option value="all">All statuses</option>
           <option value="sent">Sent</option>
           <option value="test_logged">Test logged</option>
@@ -126,14 +126,14 @@ export default function LogsPage() {
           <option value="skipped">Skipped</option>
         </select>
         <select value={filterBiz} onChange={e => setFilterBiz(e.target.value)}
-          className="border rounded-md px-2 py-1.5 text-sm text-gray-600">
+          className="border rounded-md px-2 py-1.5 text-sm text-gray-700">
           <option value="">All businesses</option>
           {businesses.map(b => <option key={b.id} value={b.id}>{b.business_name}</option>)}
         </select>
         <input type="date" value={filterStart} onChange={e => setFilterStart(e.target.value)}
-          className="border rounded-md px-2 py-1.5 text-sm text-gray-600" placeholder="Start date" />
+          className="border rounded-md px-2 py-1.5 text-sm text-gray-700" placeholder="Start date" />
         <input type="date" value={filterEnd} onChange={e => setFilterEnd(e.target.value)}
-          className="border rounded-md px-2 py-1.5 text-sm text-gray-600" placeholder="End date" />
+          className="border rounded-md px-2 py-1.5 text-sm text-gray-700" placeholder="End date" />
         <button onClick={loadLogs} className="bg-gray-700 text-white px-3 py-1.5 rounded-md text-sm hover:bg-gray-800">
           Apply
         </button>
@@ -149,29 +149,29 @@ export default function LogsPage() {
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b">
               <tr>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Triggered</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Business</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Location</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Contact</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Rule</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Temp</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Status</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Message / Reason</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Triggered</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Business</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Location</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Contact</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Rule</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Temp</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Status</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Message / Reason</th>
               </tr>
             </thead>
             <tbody>
               {logs.map(log => (
                 <tr key={log.id} className="border-t hover:bg-gray-50 align-top">
-                  <td className="px-4 py-3 text-gray-600 text-xs whitespace-nowrap">
+                  <td className="px-4 py-3 text-gray-700 text-xs whitespace-nowrap">
                     {new Date(log.triggered_at).toLocaleString()}
                   </td>
-                  <td className="px-4 py-3 text-gray-600">{log.businesses?.business_name ?? '—'}</td>
-                  <td className="px-4 py-3 text-gray-600">{log.locations?.location_name ?? '—'}</td>
+                  <td className="px-4 py-3 text-gray-700">{log.businesses?.business_name ?? '—'}</td>
+                  <td className="px-4 py-3 text-gray-700">{log.locations?.location_name ?? '—'}</td>
                   <td className="px-4 py-3 text-gray-700 font-mono text-xs">{log.contacts?.phone_number ?? '—'}</td>
                   <td className="px-4 py-3 text-gray-700 text-xs">{log.utility_rate_rules?.program_name ?? '—'}</td>
-                  <td className="px-4 py-3 text-gray-600 font-mono">{log.temperature_f != null ? `${log.temperature_f}°F` : '—'}</td>
+                  <td className="px-4 py-3 text-gray-700 font-mono">{log.temperature_f != null ? `${log.temperature_f}°F` : '—'}</td>
                   <td className="px-4 py-3">
-                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_BADGE[log.status] ?? 'bg-gray-100 text-gray-600'}`}>
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${STATUS_BADGE[log.status] ?? 'bg-gray-100 text-gray-700'}`}>
                       {log.status}
                     </span>
                   </td>
@@ -181,7 +181,7 @@ export default function LogsPage() {
                 </tr>
               ))}
               {logs.length === 0 && (
-                <tr><td colSpan={8} className="px-4 py-8 text-center text-gray-600 text-sm">No logs yet. Run an alert check to see results.</td></tr>
+                <tr><td colSpan={8} className="px-4 py-8 text-center text-gray-700 text-sm">No logs yet. Run an alert check to see results.</td></tr>
               )}
             </tbody>
           </table>
@@ -216,7 +216,7 @@ export default function LogsPage() {
                 {testing ? 'Running…' : 'Run Test'}
               </button>
               <button onClick={() => { setShowTestModal(false); setTestResult(null) }}
-                className="border px-4 py-2 rounded-md text-sm text-gray-600 hover:bg-gray-50">
+                className="border px-4 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-50">
                 Close
               </button>
             </div>

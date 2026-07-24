@@ -70,11 +70,11 @@ export default function BusinessesPage() {
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b">
               <tr>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Name</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Website</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Status</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Locations</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Created</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Name</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Website</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Status</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Locations</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Created</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
@@ -89,7 +89,7 @@ export default function BusinessesPage() {
                     </span>
                   </td>
                   <td className="px-4 py-3 text-gray-700">{biz.locations?.length ?? 0}</td>
-                  <td className="px-4 py-3 text-gray-600">{new Date(biz.created_at).toLocaleDateString()}</td>
+                  <td className="px-4 py-3 text-gray-700">{new Date(biz.created_at).toLocaleDateString()}</td>
                   <td className="px-4 py-3 text-right space-x-2">
                     <button onClick={() => openEdit(biz)} className="text-blue-600 hover:underline text-xs">Edit</button>
                     <button onClick={() => handleDelete(biz.id)} className="text-red-500 hover:underline text-xs">Delete</button>
@@ -97,7 +97,7 @@ export default function BusinessesPage() {
                 </tr>
               ))}
               {items.length === 0 && (
-                <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-600 text-sm">No businesses yet. Add one to get started.</td></tr>
+                <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-700 text-sm">No businesses yet. Add one to get started.</td></tr>
               )}
             </tbody>
           </table>
@@ -111,17 +111,17 @@ export default function BusinessesPage() {
             <div className="space-y-3">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Business Name *</label>
-                <input className="w-full border rounded-md px-3 py-2 text-sm" value={form.business_name}
+                <input className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" value={form.business_name}
                   onChange={e => setForm(p => ({ ...p, business_name: e.target.value }))} />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Website</label>
-                <input className="w-full border rounded-md px-3 py-2 text-sm" value={form.website}
+                <input className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" value={form.website}
                   onChange={e => setForm(p => ({ ...p, website: e.target.value }))} />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
-                <textarea className="w-full border rounded-md px-3 py-2 text-sm" rows={3} value={form.notes}
+                <textarea className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" rows={3} value={form.notes}
                   onChange={e => setForm(p => ({ ...p, notes: e.target.value }))} />
               </div>
               <label className="flex items-center gap-2 text-sm">
@@ -134,7 +134,7 @@ export default function BusinessesPage() {
                 className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 disabled:opacity-50">
                 {saving ? 'Saving…' : 'Save'}
               </button>
-              <button onClick={() => setShowModal(false)} className="border px-4 py-2 rounded-md text-sm text-gray-600 hover:bg-gray-50">
+              <button onClick={() => setShowModal(false)} className="border px-4 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-50">
                 Cancel
               </button>
             </div>

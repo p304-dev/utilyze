@@ -141,3 +141,82 @@ export interface SmsSendResult {
   messageId?: string
   error?: string
 }
+
+// ─── Water Leak Alert module types ───────────────────────────────────────────
+
+export interface WaterCustomer {
+  id: string
+  business_id: string | null
+  business_name: string
+  city: string
+  state: string
+  utility_provider: string
+  utility_username: string
+  // utility_password_encrypted is never returned to the client
+  meter_id: string | null
+  move_in_date: string | null
+  phone_number: string
+  timezone: string
+  check_time: string   // "HH:MM"
+  active: boolean
+  created_at: string
+}
+
+export interface WaterBusinessHours {
+  id: string
+  water_customer_id: string
+  day_of_week: number  // 0=Sunday … 6=Saturday
+  is_open: boolean
+  open_time: string | null   // "HH:MM:SS"
+  close_time: string | null  // "HH:MM:SS"
+}
+
+export interface WaterAlertSettings {
+  id: string
+  water_customer_id: string
+  after_hours_enabled: boolean
+  min_after_hours_gallons: number
+  continuous_flow_enabled: boolean
+  continuous_flow_min_hourly_gallons: number
+}
+
+export interface WaterUsageRecord {
+  id: string
+  water_customer_id: string
+  usage_date: string  // "YYYY-MM-DD"
+  hour: number        // 0..23
+  gallons: number
+  retrieved_at: string
+}
+
+export interface WaterAlert {
+  id: string
+  water_customer_id: string
+  alert_type: string   // 'after_hours' | 'continuous_flow'
+  message: string
+  detection_date: string  // "YYYY-MM-DD"
+  status: string          // 'sent' | 'failed' | 'skipped' | 'test_logged'
+  provider: string | null
+  provider_message_id: string | null
+  error_message: string | null
+  skip_reason: string | null
+  idempotency_key: string | null
+  created_at: string
+}
+
+export interface WaterScrapeRun {
+  id: string
+  water_customer_id: string
+  started_at: string
+  finished_at: string | null
+  status: string  // 'running' | 'success' | 'error'
+  rows_retrieved: number | null
+  error_message: string | null
+}
+
+export interface WaterCheckResult {
+  processed: number
+  alertsSent: number
+  skipped: number
+  failed: number
+}

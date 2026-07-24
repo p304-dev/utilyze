@@ -123,7 +123,7 @@ export default function LocationsPage() {
         <div className="flex items-center gap-3">
           <h2 className="text-xl font-semibold text-gray-900">Locations</h2>
           <select value={filterBiz} onChange={e => { setFilterBiz(e.target.value); load(e.target.value) }}
-            className="border rounded-md px-2 py-1.5 text-sm text-gray-600">
+            className="border rounded-md px-2 py-1.5 text-sm text-gray-900">
             <option value="">All businesses</option>
             {businesses.map(b => <option key={b.id} value={b.id}>{b.business_name}</option>)}
           </select>
@@ -138,11 +138,11 @@ export default function LocationsPage() {
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b">
               <tr>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Location</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Business</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">City, State</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Utility</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Status</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Location</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Business</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">City, State</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Utility</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-700">Status</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
@@ -165,7 +165,7 @@ export default function LocationsPage() {
                 </tr>
               ))}
               {items.length === 0 && (
-                <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-600 text-sm">No locations yet.</td></tr>
+                <tr><td colSpan={6} className="px-4 py-8 text-center text-gray-700 text-sm">No locations yet.</td></tr>
               )}
             </tbody>
           </table>
@@ -179,42 +179,42 @@ export default function LocationsPage() {
             <div className="space-y-3">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Business *</label>
-                <select className="w-full border rounded-md px-3 py-2 text-sm" value={form.business_id} onChange={f('business_id')}>
+                <select className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" value={form.business_id} onChange={f('business_id')}>
                   <option value="">Select business…</option>
                   {businesses.map(b => <option key={b.id} value={b.id}>{b.business_name}</option>)}
                 </select>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Location Name *</label>
-                <input className="w-full border rounded-md px-3 py-2 text-sm" value={form.location_name} onChange={f('location_name')} />
+                <input className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" value={form.location_name} onChange={f('location_name')} />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Street Address</label>
-                <input className="w-full border rounded-md px-3 py-2 text-sm" value={form.street_address} onChange={f('street_address')} />
+                <input className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" value={form.street_address} onChange={f('street_address')} />
               </div>
               <div className="grid grid-cols-3 gap-2">
                 <div className="col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1">City *</label>
-                  <input className="w-full border rounded-md px-3 py-2 text-sm" value={form.city} onChange={f('city')} />
+                  <input className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" value={form.city} onChange={f('city')} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">State *</label>
-                  <input className="w-full border rounded-md px-3 py-2 text-sm" value={form.state} onChange={f('state')} maxLength={2} placeholder="TX" />
+                  <input className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" value={form.state} onChange={f('state')} maxLength={2} placeholder="TX" />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Zip</label>
-                  <input className="w-full border rounded-md px-3 py-2 text-sm" value={form.zip} onChange={f('zip')} />
+                  <input className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" value={form.zip} onChange={f('zip')} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Utility Name *</label>
-                  <input className="w-full border rounded-md px-3 py-2 text-sm" value={form.utility_name} onChange={f('utility_name')} placeholder="CPS Energy" />
+                  <input className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" value={form.utility_name} onChange={f('utility_name')} placeholder="CPS Energy" />
                 </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Timezone *</label>
-                <select className="w-full border rounded-md px-3 py-2 text-sm" value={form.timezone} onChange={f('timezone')}>
+                <select className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" value={form.timezone} onChange={f('timezone')}>
                   {US_TIMEZONES.map(tz => <option key={tz} value={tz}>{tz}</option>)}
                 </select>
               </div>
@@ -227,8 +227,8 @@ export default function LocationsPage() {
                   </button>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
-                  <input className="w-full border rounded-md px-3 py-2 text-sm" placeholder="Latitude" value={form.latitude} onChange={f('latitude')} />
-                  <input className="w-full border rounded-md px-3 py-2 text-sm" placeholder="Longitude" value={form.longitude} onChange={f('longitude')} />
+                  <input className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" placeholder="Latitude" value={form.latitude} onChange={f('latitude')} />
+                  <input className="w-full border rounded-md px-3 py-2 text-sm text-gray-900" placeholder="Longitude" value={form.longitude} onChange={f('longitude')} />
                 </div>
               </div>
               <label className="flex items-center gap-2 text-sm">
@@ -241,7 +241,7 @@ export default function LocationsPage() {
                 className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 disabled:opacity-50">
                 {saving ? 'Saving…' : 'Save'}
               </button>
-              <button onClick={() => setShowModal(false)} className="border px-4 py-2 rounded-md text-sm text-gray-600 hover:bg-gray-50">
+              <button onClick={() => setShowModal(false)} className="border px-4 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-50">
                 Cancel
               </button>
             </div>

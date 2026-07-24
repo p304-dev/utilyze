@@ -19,7 +19,11 @@ async function getTemperatureFromOpenMeteo(lat: number, lon: number): Promise<nu
 
 // Returns current temperature in Fahrenheit for the given coordinates.
 // Provider is swappable via WEATHER_PROVIDER env var — add a new case below to support others.
+// Set OVERRIDE_TEMPERATURE_F to bypass the API entirely (useful for testing on restricted networks).
 export async function getCurrentTemperatureF(lat: number, lon: number): Promise<number> {
+  const override = process.env.OVERRIDE_TEMPERATURE_F
+  if (override) return parseFloat(override)
+
   const provider = process.env.WEATHER_PROVIDER ?? 'open_meteo'
 
   switch (provider) {

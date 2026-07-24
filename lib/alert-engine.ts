@@ -151,13 +151,14 @@ export async function runAlertCheck(testMode = false, locationId?: string): Prom
       continue
     }
 
-    // 6. Load contacts for this business who want alerts and haven't opted out
+    // 6. Load contacts for this location: business-wide (no location assigned) OR assigned to this location
     const { data: contacts } = await supabase
       .from('contacts')
       .select('*')
       .eq('business_id', location.business_id)
       .eq('receive_alerts', true)
       .eq('opt_out_status', 'subscribed')
+      .or(`location_id.is.null,location_id.eq.${location.id}`)
 
     if (!contacts || contacts.length === 0) {
       result.skipped++
@@ -219,9 +220,10 @@ export async function runAlertCheck(testMode = false, locationId?: string): Prom
           end_time: rule.end_time_local.slice(0, 5),   // "19:00:00" → "19:00"
         })
 
-        // 7e. Test mode — log without sending
+        // 7e. Test mode — delete any prior log for this key and re-insert fresh
         if (effectiveTestMode) {
-          await supabase.from('alert_logs').insert({
+          await supabase.from('alert_logs').delete().eq('idempotency_key', idempotencyKey).neq('status', 'sent')
+          const { error: insertErr } = await supabase.from('alert_logs').insert({
             business_id: location.business_id,
             location_id: location.id,
             contact_id: contact.id,
@@ -232,14 +234,19 @@ export async function runAlertCheck(testMode = false, locationId?: string): Prom
             provider: 'test',
             idempotency_key: idempotencyKey,
           })
-          result.sent++
+          if (insertErr) {
+            console.error('[AlertEngine] Failed to insert test log:', insertErr.message)
+            result.failed++
+          } else {
+            result.sent++
+          }
           continue
         }
 
         // 7f. Send real SMS and log the outcome
         const smsResult = await sendSms(contact.phone_number, messageBody)
 
-        await supabase.from('alert_logs').insert({
+        const { error: smsLogErr } = await supabase.from('alert_logs').insert({
           business_id: location.business_id,
           location_id: location.id,
           contact_id: contact.id,
@@ -253,6 +260,7 @@ export async function runAlertCheck(testMode = false, locationId?: string): Prom
           sent_at: smsResult.success ? new Date().toISOString() : null,
           idempotency_key: idempotencyKey,
         })
+        if (smsLogErr) console.error('[AlertEngine] Failed to insert SMS log:', smsLogErr.message)
 
         if (smsResult.success) {
           result.sent++
