@@ -34,9 +34,9 @@ export async function GET() {
     }
   }
 
-  const enriched = (customers ?? []).map(c => ({
+  const enriched = (customers as Record<string, unknown>[] ?? []).map(c => ({
     ...c,
-    latest_scrape: latestByCustomer.get(c.id) ?? null,
+    latest_scrape: latestByCustomer.get(c.id as string) ?? null,
   }))
 
   return Response.json(enriched)
