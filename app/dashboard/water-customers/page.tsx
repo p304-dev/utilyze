@@ -309,7 +309,7 @@ export default function WaterCustomersPage() {
           <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
             <h3 className="text-base font-semibold mb-1">Test Scrape</h3>
             <p className="text-sm text-gray-700 mb-4">
-              Logs into <strong>{testCustomer.business_name}</strong>'s SAWS account, pulls usage data, and
+              Logs into <strong>{testCustomer.business_name}</strong>&apos;s SAWS account, pulls usage data, and
               runs leak detection in test mode. No real SMS will be sent.
             </p>
             {testResult && (

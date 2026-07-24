@@ -29,11 +29,11 @@ function parseSawsDate(category: string, startDateStr: string): string {
   return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
 }
 
-function flattenHourly(days: any[], startDate: string): WaterUsageHour[] {
+function flattenHourly(days: Record<string, unknown>[], startDate: string): WaterUsageHour[] {
   const hours: WaterUsageHour[] = []
   for (const day of days) {
     const date = parseSawsDate(String(day.category), startDate)
-    const hourly: any[] = day.hourly ?? []
+    const hourly = (day.hourly ?? []) as Record<string, unknown>[]
     for (let h = 0; h < hourly.length; h++) {
       hours.push({ date, hour: h, gallons: Number(hourly[h].usage ?? 0) })
     }
