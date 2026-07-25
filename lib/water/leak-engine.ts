@@ -85,13 +85,6 @@ export async function runWaterCheck(
   }
 
   for (const customer of customers as unknown as (WaterCustomer & { utility_password_encrypted: string })[]) {
-    // When running globally, only process customers whose check_time hour matches now.
-    // Each customer runs once per day at their preferred local hour.
-    if (!customerId) {
-      const localHour = getLocalHour(customer.timezone)
-      const checkHour = parseInt(customer.check_time.split(':')[0])
-      if (localHour !== checkHour) continue
-    }
 
     result.processed++
 
@@ -184,35 +177,81 @@ export async function runWaterCheck(
         .eq('water_customer_id', customer.id)
       const businessHours = (bhRows ?? []) as WaterBusinessHours[]
 
-      // "Yesterday" in the customer's timezone is the most recent complete day
-      const yesterdayStr = getLocalDateString(customer.timezone, -1)
-      const yesterdayDow = getLocalDayOfWeek(customer.timezone, -1)
-      const dayHours = businessHours.find(bh => bh.day_of_week === yesterdayDow)
-
       const alertsToRaise: Array<{ type: string; reason: string; date: string }> = []
 
-      // ── Algorithm 1: After-hours usage ────────────────────────────────────
-      // Sums gallons outside business hours for yesterday.
-      // If the day is closed (is_open=false), all gallons count as after-hours.
+      // ── Algorithm 1: After-hours usage (real-time rolling window) ─────────
+      // Runs every cron tick. Checks if we are currently in an after-hours window,
+      // then sums gallons since business last closed. Fires immediately when the
+      // threshold is crossed. Idempotency key per night prevents repeat SMS.
       if (settings.after_hours_enabled) {
-        const { data: yesterdayUsage } = await supabase
-          .from('water_usage_records')
-          .select('hour, gallons')
-          .eq('water_customer_id', customer.id)
-          .eq('usage_date', yesterdayStr)
+        const currentHour = getLocalHour(customer.timezone)
+        const todayStr = getLocalDateString(customer.timezone, 0)
+        const todayDow = getLocalDayOfWeek(customer.timezone, 0)
+        const todayBH = businessHours.find(bh => bh.day_of_week === todayDow)
 
-        if (yesterdayUsage && yesterdayUsage.length > 0) {
+        if (!todayBH || isHourAfterHours(currentHour, todayBH)) {
+          // isPreOpen: it's early morning, before the business opens today.
+          // The active "night" started when business closed yesterday.
+          const openHour = todayBH?.is_open && todayBH.open_time
+            ? parseInt(todayBH.open_time.split(':')[0])
+            : 24
+          const isPreOpen = todayBH?.is_open === true && currentHour < openHour
+
           let afterHoursGallons = 0
-          for (const record of yesterdayUsage) {
-            if (!dayHours || isHourAfterHours(record.hour, dayHours)) {
-              afterHoursGallons += Number(record.gallons)
+          let nightStartDate: string
+
+          if (isPreOpen) {
+            // Night spans yesterday-close → today-now (crosses midnight)
+            const yesterdayStr = getLocalDateString(customer.timezone, -1)
+            const yesterdayDow = getLocalDayOfWeek(customer.timezone, -1)
+            const yesterdayBH = businessHours.find(bh => bh.day_of_week === yesterdayDow)
+            const yesterdayCloseHour = yesterdayBH?.is_open && yesterdayBH.close_time
+              ? parseInt(yesterdayBH.close_time.split(':')[0])
+              : 0
+            nightStartDate = yesterdayStr
+
+            const { data: yU } = await supabase
+              .from('water_usage_records')
+              .select('hour, gallons')
+              .eq('water_customer_id', customer.id)
+              .eq('usage_date', yesterdayStr)
+              .gte('hour', yesterdayCloseHour)
+
+            const { data: tU } = await supabase
+              .from('water_usage_records')
+              .select('hour, gallons')
+              .eq('water_customer_id', customer.id)
+              .eq('usage_date', todayStr)
+              .lte('hour', currentHour)
+
+            for (const r of [...(yU ?? []), ...(tU ?? [])]) {
+              afterHoursGallons += Number(r.gallons)
+            }
+          } else {
+            // Night started today at close (or the whole day is closed)
+            const closeHour = todayBH?.is_open && todayBH.close_time
+              ? parseInt(todayBH.close_time.split(':')[0])
+              : 0
+            nightStartDate = todayStr
+
+            const { data: tU } = await supabase
+              .from('water_usage_records')
+              .select('hour, gallons')
+              .eq('water_customer_id', customer.id)
+              .eq('usage_date', todayStr)
+              .gte('hour', closeHour)
+              .lte('hour', currentHour)
+
+            for (const r of (tU ?? [])) {
+              afterHoursGallons += Number(r.gallons)
             }
           }
+
           if (afterHoursGallons >= settings.min_after_hours_gallons) {
             alertsToRaise.push({
               type: 'after_hours',
-              reason: `${Math.round(afterHoursGallons)} gallons used outside business hours on ${yesterdayStr}`,
-              date: yesterdayStr,
+              reason: `${Math.round(afterHoursGallons)} gallons after hours since business closed (detected at ${String(currentHour).padStart(2, '0')}:00)`,
+              date: nightStartDate,
             })
           }
         }
@@ -238,7 +277,7 @@ export async function runWaterCheck(
             alertsToRaise.push({
               type: 'continuous_flow',
               reason: 'Continuous water flow detected for the previous 24 hours',
-              date: yesterdayStr,
+              date: getLocalDateString(customer.timezone, 0),
             })
           }
         }
