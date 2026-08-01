@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "postinstall": "if [ \"$RAILWAY_ENVIRONMENT\" != \"\" ]; then npx playwright install chromium; fi"
+    "lint": "next lint"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.0",
