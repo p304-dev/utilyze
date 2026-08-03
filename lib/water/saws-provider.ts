@@ -55,8 +55,17 @@ export class SawsProvider implements WaterUtilityProvider {
     // Dynamic import keeps playwright out of the bundle on environments that don't have it.
     // Requires: npm install playwright && npx playwright install chromium
     const { chromium } = await import('playwright')
-    const browser = await chromium.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] })
-    const context = await browser.newContext()
+    const browser = await chromium.launch({
+      headless: true,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-blink-features=AutomationControlled',
+      ],
+    })
+    const context = await browser.newContext({
+      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    })
     const page = await context.newPage()
 
     let capturedMeterId: string | undefined
@@ -66,12 +75,19 @@ export class SawsProvider implements WaterUtilityProvider {
 
     try {
       // Step 1: Login via UI (always required to establish authenticated session)
-      await page.goto(LOGIN_URL)
+      await page.goto(LOGIN_URL, { waitUntil: 'domcontentloaded' })
       await page.fill(USERNAME_SELECTOR, username)
       await page.fill(PASSWORD_SELECTOR, password)
       // Password is never logged — only filled into the browser form field
       await page.click(SUBMIT_SELECTOR)
-      await page.waitForLoadState('networkidle')
+      // waitForURL is the modern replacement for deprecated waitForNavigation.
+      // If credentials are wrong, SAWS stays on the Login page and this times out.
+      await page.waitForURL(url => !url.toString().includes('Login'), {
+        waitUntil: 'networkidle',
+        timeout: 60_000,
+      }).catch(() => {
+        throw new Error('SAWS login failed — page did not navigate away from Login. Check credentials in Water Customers dashboard.')
+      })
 
       // Always navigate to the usage page — this establishes full page-level session
       // context that ASP.NET requires before accepting AJAX/PageMethod calls.
